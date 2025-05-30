@@ -9,3 +9,13 @@ _LOCALES = {
 
 def get_locale(lang_code: str):
     return _LOCALES.get(lang_code.upper())
+
+
+_COMMANDS = {
+    "settings_btn": {
+        "EN": "⚙️ Settings",
+        "RU": "⚙️ Настройки",
+        "PL": "⚙️ Ustawienia",
+        "BE": "⚙️ Налады",
+    },
+}

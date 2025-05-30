@@ -1,12 +1,12 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import CommandStart
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.fsm.context import FSMContext
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
 from fsm.registration import RegistrationFSM
 from fsm.user_preferences import UserPreferencesFSM
 from utils.api_client import api_request
-from locales.locale import get_locale
+from utils.i18n import locale_for, command_variants
 
 router = Router(name="onboarding")
 
@@ -26,7 +26,7 @@ async def start(message: Message, state: FSMContext):
         await state.update_data(preferred_lang=user_data.get("preferred_lang"))
         await state.set_state(UserPreferencesFSM.preferred_lang)
 
-        strings, keyboards = get_locale((await state.get_data()).get("preferred_lang"))
+        strings, keyboards = await locale_for(state, message.from_user.id)
 
         await message.answer(
             strings["welcome_back"],
@@ -87,7 +87,7 @@ async def choose_language(message: Message, state: FSMContext):
     await state.set_state(UserPreferencesFSM.preferred_lang)
     await state.update_data(preferred_lang=lang_code)
 
-    strings, keyboards = get_locale((await state.get_data()).get("preferred_lang"))
+    strings, keyboards = await locale_for(state, message.from_user.id)
 
     await message.answer(
         f"{strings['lang_selected']}\n\n{strings['welcome']}",
