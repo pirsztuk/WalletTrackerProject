@@ -23,4 +23,4 @@ COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "api_service.wsgi:application", "--workers=2", "--threads=2", "--bind", "0.0.0.0:8000", "--worker-class", "gthread"]

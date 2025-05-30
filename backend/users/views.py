@@ -17,16 +17,17 @@ class ServiceUserView(ResponseShortcutsMixin, APIView):
     def get(self, request, *args, **kwargs):
 
         form = forms.GetUserForm(request.data)
-
+        
         if not form.is_valid():
             return self.bad_request(form.errors)
         
         if not models.User.objects.filter(telegram_id=form.cleaned_data["telegram_id"]).exists():
-            return self.no_content("user does not exist")
+            return self.no_content()
         
         user = models.User.objects.get(telegram_id=form.cleaned_data["telegram_id"])
+        serialized = serializers.UserSerializer(user).data
 
-        return self.ok(serializers.UserSerializer(user).data)
+        return self.ok(serialized)
     
 
     @service_token_required
@@ -36,6 +37,7 @@ class ServiceUserView(ResponseShortcutsMixin, APIView):
 
         if not form.is_valid():
             return self.bad_request(form.errors)
+        
         
         if models.User.objects.filter(telegram_id=form.cleaned_data["telegram_id"]).exists():
             return self.bad_request("telegram_id is already taken")
