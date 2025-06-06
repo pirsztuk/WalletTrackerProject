@@ -3,8 +3,10 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 strings = {
     "welcome": "Wszystko gotowe! Użyj menu poniżej, aby śledzić swoje finanse 💸",
     "welcome_back": "Witamy ponownie! Co chcesz teraz zrobić?",
+    "choose_lang": "Wybierz język:",
     "lang_selected": "✅ Język ustawiony na Polski.",
 
+    "main_menu_title": "🏠 Główne menu",
     "settings_title": "⚙️ Ustawienia",
 }
 

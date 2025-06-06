@@ -50,3 +50,26 @@ class ServiceUserView(ResponseShortcutsMixin, APIView):
         )
 
         return self.created({"status": "ok"})
+    
+
+    @service_token_required
+    def patch(self, request, *args, **kwargs):
+
+        form = forms.UpdateUserForm(request.data)
+
+        if not form.is_valid():
+            return self.bad_request(form.errors)
+
+        try:
+            user = models.User.objects.get(telegram_id=form.cleaned_data["telegram_id"])
+        except models.User.DoesNotExist:
+            return self.bad_request("User not found")
+
+        for field in ["full_name", "user_name", "preferred_lang"]:
+            value = form.cleaned_data.get(field)
+            if value is not None:
+                setattr(user, field, value)
+
+        user.save()
+
+        return self.ok({"status": "updated"})

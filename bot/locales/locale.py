@@ -18,4 +18,19 @@ _COMMANDS = {
         "PL": "⚙️ Ustawienia",
         "BE": "⚙️ Налады",
     },
+
+    "change_language_btn": {
+        "EN": "🌐 Change language",
+        "RU": "🌐 Сменить язык",
+        "PL": "🌐 Zmień język",
+        "BE": "🌐 Змяніць мову"
+    },
+
+    "back_btn": {
+        "EN": "⬅️ Back",
+        "RU": "⬅️ Назад",
+        "PL": "⬅️ Wstecz",
+        "BE": "⬅️ Назад"
+    },
+
 }

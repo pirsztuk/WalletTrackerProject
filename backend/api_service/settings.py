@@ -28,6 +28,7 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = ["web", "localhost", "127.0.0.1"]
 
+APPEND_SLASH = True
 
 # Application definition
 

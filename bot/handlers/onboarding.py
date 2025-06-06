@@ -12,7 +12,7 @@ router = Router(name="onboarding")
 
 
 @router.message(CommandStart())
-async def start(message: Message, state: FSMContext):
+async def start(message: Message, state: FSMContext) -> None:
     telegram_id = message.from_user.id
 
     response = await api_request(
@@ -51,6 +51,7 @@ async def start(message: Message, state: FSMContext):
             "Please select your language / Пожалуйста, выберите язык:",
             reply_markup=lang_kb
         )
+    await message.delete()
 
 
 LANG_CHOICES = {
@@ -61,7 +62,9 @@ LANG_CHOICES = {
 }
 
 @router.message(RegistrationFSM.choosing_language, F.text.in_(LANG_CHOICES.keys()))
-async def choose_language(message: Message, state: FSMContext):
+async def choose_language(message: Message, state: FSMContext) -> None:
+    await message.delete()
+
     lang_name = message.text
     lang_code = LANG_CHOICES[lang_name]
 
